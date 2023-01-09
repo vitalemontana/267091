@@ -50,6 +50,7 @@ We had three datasets at our disposition:
   
 <br/><br/>
 
+
 ### Exploratory Data Analysis
 First we performed an EDA to understand the company data, to see undergoing trends, to get useful insight and to understand whether some data cleaning was needed.
 
@@ -88,27 +89,49 @@ In order to build a recommender system, three different recommendation systems w
 * A content-based recommender system
 * A neural network-based content filtering system.
 
+[ANDREA SCRIVI QUA]
 The **collaborative filtering** recommender system uses the customer-item interaction data from the Transactions dataset to make recommendations. It uses a matrix factorization technique to identify the latent features of the customers and items and then uses these features to make recommendations.
-
+[ANDREA SCRIVI QUA]
 The **content-based** recommender system uses the product information from the Articles dataset to make recommendations. It uses a vector representation of the products and then uses a similarity measure to make recommendations.
 
 The **neural network-based** content filtering system uses product information from the Articles datasets to make recommendations. It uses a deep neural network to learn the customer and product features and then uses these features to make recommendations.
 
 <br/><br/>
 
-## Experiment design
-### Collaborative filtering
+## Experiment design 
+### Collaborative filtering [ANDREA SCRIVI QUA]
+* The main purpose: 1-2 sentence high-level explanation
+* Baseline(s): describe the method(s) that you used to compare your work to
+* Evaluation Metrics(s): which ones did you use and why?
 
-#### Results
-
+#### Results [ANDREA SCRIVI QUA]
+* Main finding(s): report your final results and what you might conclude from your work
+* Include at least one placeholder figure and/or table for communicating your findings
+* All the figures containing results should be generated from the code.
 <br/>
-### Content-based
 
-#### Results
+### Content based [ANDREA SCRIVI QUA]
+* The main purpose: 1-2 sentence high-level explanation
+* Baseline(s): describe the method(s) that you used to compare your work to
+* Evaluation Metrics(s): which ones did you use and why?
 
+#### Results [ANDREA SCRIVI QUA]
+* Main finding(s): report your final results and what you might conclude from your work
+* Include at least one placeholder figure and/or table for communicating your findings
+* All the figures containing results should be generated from the code.
 <br/>
-### Neural Network Content Based: Two-tower retreival model
-The idea is to contstruct a retrieval model are generally composed by two components:
+
+### Neural Network Based: Two-tower retreival model
+The features we decided to exploit were:
+* index
+* perceived_color_value
+* garment_group
+* colour_group
+
+We chose these features for this specific model because these, in our opinion, were the features that would have made the model learn enough about customers tastes and similarities, but without getting too specific and, therefore, avoiding over-fitting or recommendations too similar to previous purchases.
+
+
+The idea for the model is to construct a retrieval model composed by two components:
 
 1. A query model which produces the query representation (commonly a fixed-dimensionality embedding vector) by means of query features.
 
@@ -121,7 +144,28 @@ To build and train this two-tower system, we will predict a collection of items 
 
 To fit and evaluate the model, we need to split it into a training and evaluation set. We decided to split the data in chronological order, using older transactions to predict new ones.
 
-#### factorized_top_k
+<br/>
+
+#### Evaluation metric: factorized_top_k
 Factorized_top_k is a metric used to measure the performance of a retrieval system. It is based on the idea of factorizing the user-item matrix into two matrices, one representing the user features and the other representing the item features. The metric then calculates the top k items for each user based on the dot product of the user and item feature matrices. 
 This metric is useful for measuring the performance of a retrieval system because it takes into account both the user and item features, which can be used to make more accurate recommendations.
 
+<img width="628" alt="Screenshot 2023-01-10 alle 00 06 09" src="https://user-images.githubusercontent.com/96107340/211426095-429dd113-bca2-4bda-ad87-318e48c4e40e.png">
+
+We can see that the model performed very well on the test set. In fact, it has factorized top 100 categorical accuracy of over 96%, and of 93% for top 50. That's even higher than the performances of the training. This is probabably due to the fact that we reduced the articles features to avoid overfitting and to have a more generalized model. 
+
+<br/>
+
+#### Results
+After having constructed, trained and evaluated the model, we built the 'recSys()' function, that takes as input the id of a customer and prints 5 recommended articles, in a completely readable format. The function has a constraint to avoid any possibility of recommending already bought articles.
+
+Here we can see its output for customer 9505:
+
+<img width="480" alt="Screenshot 2023-01-10 alle 00 11 15" src="https://user-images.githubusercontent.com/96107340/211426701-cb97df42-4124-474e-a655-e265ce67e7fc.png">
+
+<br/><br/>
+
+## Conclusions [ANDREA SCRIVI QUA]
+* Summarize in one paragraph the take-away point from your work.
+* Include one paragraph to explain what questions may not be fully answered by your
+work as well as natural next steps for this direction of future work
