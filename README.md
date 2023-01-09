@@ -91,6 +91,8 @@ In order to build a recommender system, three different recommendation systems w
 
 [ANDREA SCRIVI QUA]
 The **collaborative filtering** recommender system uses the customer-item interaction data from the Transactions dataset to make recommendations. It uses a matrix factorization technique to identify the latent features of the customers and items and then uses these features to make recommendations.
+
+
 [ANDREA SCRIVI QUA]
 The **content-based** recommender system uses the product information from the Articles dataset to make recommendations. It uses a vector representation of the products and then uses a similarity measure to make recommendations.
 
