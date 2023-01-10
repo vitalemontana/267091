@@ -66,20 +66,30 @@ Finally with the 'Transactions' dataset we noticed that it was connected to the 
 ### Exploratory Data Analysis
 We then performed an EDA on the 3 datasets to understand the company data, to see undergoing trends and to get useful insight.
 
-Articles: we grouped articles according to their features starting from the division in types. Plotting the results we saw that they were divided in 80 types and the type with more articles in the dataset was 'Trousers'. Afterwards we did the same for 'product_group_name' noticing that the plot was less caothic and articles were divided in 11 groups where the group with most articles was 'Garment Upper Body'. Then we looked at the different attributes regarding colours, where Black seems to dominate, and we have chosen 'perceived_colour_master_name' as the feature to include in our first recommender system as it was able to represent data better than 'colour_group_name' and 'perceived_colour_value_name'. We simply followed the same process for each feature of the dataset and chose the columns to take in consideration to build our Content-Based Filtering Recommender System.
+Articles: we grouped articles according to their features starting from the division in types. Plotting the results we saw that they were divided in 80 types and the type with more articles in the dataset was 'Trousers'. 
+<img width="1107" alt="product_type_name.png" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
+Afterwards we did the same for 'product_group_name' noticing that the plot was less caothic and articles were divided in 11 groups where the group with most articles was 'Garment Upper Body'. 
+<img width="1107" alt="product_group_name.png" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
+Then we looked at the different attributes regarding colours, where Black seems to dominate, and we have chosen 'perceived_colour_master_name' as the feature to include in our first recommender system as it was able to represent data better than 'colour_group_name' and 'perceived_colour_value_name'.
+<img width="1107" alt="perceived_colour_master_name.png" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
+We simply followed the same process for each feature of the dataset till garment_group_name.
+<img width="1107" alt="garment.png" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
+Finally we chose the columns to take in consideration to build our Content-Based Filtering Recommender System.
 
 Customers: we first took in consideration the column 'age' and plot how the different ages was spread over customers. To get an hint about the demography of the customer base we plotted the distribution of our customers' age:
 
 <img width="1107" alt="Screenshot 2023-01-09 alle 23 00 56" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
 
 Something that we thought could be useful was to assign to each of them an age group under which he/she falls. This would make our data more interpretable and less caothic and would totally helps us building the user-based recommender system. We proceeded in this way creating age ranges of more or less 10 years until we reach 65 (since there are few customers we simply assigned the group '65+'). Afterwards we add the new column age_group to the dataset. After we counted how many customers of that specified age group were present in the datase  and plotted our results, noticing that the groups with the highest number of customers are '15-24' and '25-34', this meant lots of young customers respect to old ones.
-
-
+<img width="1107" alt="age_group.png" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
 We then worked with 'fashion news' and 'club member' columns creating different dataframes to see the choices of customer acoording to their age group and discovered that in general the majority of customers tend to be not subscribed to fashion news and tend not to be part of special clubs. Also here we plotted the results.
+<img width="1107" alt="fashion news.png" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
+<img width="1107" alt="club members.png" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
 
 
-
-Transactions: some analysis has been made over the column 'date' where we found out that 2020-09-09 was the day with more transactions, although this was just for curiosity. These instead were some statistics from our dataset:
+Transactions: some analysis has been made over the column 'date' where we found out that 2020-09-09 was the day with more transactions, although this was just for curiosity. 
+<img width="1107" alt="date.png" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
+These instead were some statistics from our dataset:
 
 Number of transactions: 357535
 Number of unique articles: 6328
@@ -88,8 +98,7 @@ Average number of transactions per customer: 8.67
 Average number of transactions per article: 56.5
 
 We created different dataframes useful for our model, like 'customer_transactions', 'customer' which stated the number of transactions made by each customer or also 'articles' that stated the number of transactions for each article. Concluding our EDA we plotted our results respect to the dataset 'new' to understand between age groups how transaction groups are spread.
-
-
+<img width="1107" alt="transactions per age_group.png" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
 
 
 <br/><br/>
@@ -124,9 +133,15 @@ Then we have created a function that takes as input the article id and the numbe
 
 
 ### Collaborative
-The second type of recommendation system we have implemented is a customer-based filtering recommender system. This system is based on the idea of using customers' opinions on the different products to suggest an article to the client based on other purchases of the client and purchases and opinions of customers that are similar to him. To do this, we created a matrix with 'customer_id' and 'article_id' to map all the transactions that have taken place in the dataset. 
+The second type of recommendation system we have implemented is a Customer-based filtering recommender system. This system is based on the idea of using customers' opinions on the different products to suggest an article to the client based on other purchases of the client and purchases and opinions of customers that are similar to him. To do this, we worked initially with the dataset 'customer_transactions' that had columns 'customer_id','article_id' and 'transactions', which tell us how many times a customer has purchased that article.
+
+The first step of collaborative filtering is to transform our data into a user-item matrix also known as a "utility" matrix. In this matrix, rows represent article_id and columns represent customer_id. 
+Then we proceeded by creating dictionaries to map which row and column of the utility matrix corresponds to which article id, in particular 'article_mapper' maps article id to article index while 'article_inv_mapper' maps article indes to article id. 
+We used the 'crs_matrix' function, which stores the data sparsely and calculated the sparsity.
 
 However, the matrix had a very low sparsity, making it unreliable for predictions. To increase the sparsity, we decided to consider only a part of the dataset, discarding all the columns of the customers who bought less than a certain amount of products and some of the rows that corresponded to the products that have been bought less. To evaluate the similarity, we used the KNN algorithm from the 'sklearn' library and the cosine similarity to measure the distance and determine the “closeness” of instances.
+
+As a result we obtained a sparsity of 0,5% that allowed us to proceed with the creation of our function 'find_similar_articles' that takes as input the id of the article of interest, X2 which is the new user-item utility matrix that we have built, k as the number of similar articles to recommend and metric as the metric to be used to calculate the distance for kNN calculations.
 
 ### Neural Network-based
 The **neural network-based** content filtering system uses product information from the Articles datasets to make recommendations. It uses a deep neural network to learn the customer and product features and then uses these features to make recommendations.
