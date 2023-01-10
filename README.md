@@ -124,7 +124,9 @@ Then we have created a function that takes as input the article id and the numbe
 
 
 ### Collaborative
-The **collaborative filtering** recommender system uses the customer-item interaction data from the Transactions dataset to make recommendations. It uses a matrix factorization technique to identify the latent features of the customers and items and then uses these features to make recommendations.
+The second type of recommendation system we have implemented is a customer-based filtering recommender system. This system is based on the idea of using customers' opinions on the different products to suggest an article to the client based on other purchases of the client and purchases and opinions of customers that are similar to him. To do this, we created a matrix with 'customer_id' and 'article_id' to map all the transactions that have taken place in the dataset. 
+
+However, the matrix had a very low sparsity, making it unreliable for predictions. To increase the sparsity, we decided to consider only a part of the dataset, discarding all the columns of the customers who bought less than a certain amount of products and some of the rows that corresponded to the products that have been bought less. To evaluate the similarity, we used the KNN algorithm from the 'sklearn' library and the cosine similarity to measure the distance and determine the “closeness” of instances.
 
 ### Neural Network-based
 The **neural network-based** content filtering system uses product information from the Articles datasets to make recommendations. It uses a deep neural network to learn the customer and product features and then uses these features to make recommendations.
@@ -184,9 +186,12 @@ Here we can see its output for customer 9505:
 
 <img width="480" alt="Screenshot 2023-01-10 alle 00 11 15" src="https://user-images.githubusercontent.com/96107340/211426701-cb97df42-4124-474e-a655-e265ce67e7fc.png">
 
+
+
 <br/><br/>
 
 ## Conclusions [ANDREA SCRIVI QUA]
-* Summarize in one paragraph the take-away point from your work.
-* Include one paragraph to explain what questions may not be fully answered by your
-work as well as natural next steps for this direction of future work
+
+Our recommender engine has been implemented to boost the revenues of our company by predicting user preferences and recommending the right products to each user. The results of our project have shown that the neural network based content filtering system has the highest potential for improving the recommender system. This system was able to make more accurate recommendations than the other two systems, and it could be further improved by exploiting customer data to increase accuracy. 
+We have also seen that the collaborative filtering system and the content-based system have their own advantages and disadvantages, and they can be used in combination to create a more effective recommender system. In conclusion, our project has demonstrated the potential of using neural networks for content filtering and the importance of combining different recommendation systems to create an effective recommender system.
+
