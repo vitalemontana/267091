@@ -4,7 +4,6 @@
 * Francesco Vitale (267091)
 * Andrea Stella (270861)
 
-<br/><br/>
 ## 1) Introduction
 We impersonate the Data Science team at a fast fashion company. 
 
@@ -12,7 +11,6 @@ The platform already has a recommender system. Our job is to make it better.
 
 We will test different models and select the most suitable one.
 
-<br/><br/>
 ## 2) Methods
 Our dataset was composed by 3 files:
 
@@ -50,9 +48,16 @@ Our dataset was composed by 3 files:
   + customer_id
   + article_id
   
-<br/><br/>
 
 ### Data Collection and Preparation
+
+The pyhton libraries we used in order to analyze data were: 
+* Numpy
+* Pandas
+* Sklearn
+* Matplotlib
+* Seaborn.
+
 We began to analyse the dataset about articles since it has a complex structure and has a lot of columns, altough most attributes have 'code' and 'name' descriptions so we didn't need all of them. We looked for NaN values and luckily we didn't find them, despite this through a deeper analysis on all the attributes we discovered that some columns had values like '-1', 'Unknown' and 'undefined'. After having calculated the percentage of elements with these values we decided to delete these articles from the dataset as they could'nt helps us in building an accurate model.
 
 Talking about the data collection and preparation of 'Customers' dataset we found out that column 'age' was composed by 133 NaN values.
@@ -62,6 +67,8 @@ Now, we couldn't remove rows where NaN appeared, since we would have lost some c
 We chose the mode over the mean because the mean is more sensitive to outliers and skewed data, and, as we can see below, 75% of customers' age is under 46, while the maximum age is 91. Then we noticed that column 'age' was represented as float and we decided to change it as an integer to have a better visualization.
 
 Finally with the 'Transactions' dataset we noticed that it was connected to the other 2 datasets through 'article_id' and 'customer_id' so we needed to change it deleting the transactions made on articles that presented 'Unknown' features, in order to be coherent with the work done before.
+
+
 
 ### Exploratory Data Analysis
 We then performed an EDA on the 3 datasets to understand the company data, to see undergoing trends and to get useful insight.
@@ -101,17 +108,7 @@ We created different dataframes useful for our model, like 'customer_transaction
 <img width="1107" alt="transactions per age_group.png" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
 
 
-<br/><br/>
 
-The pyhton libraries we used in order to analyze data were: 
-* Numpy
-* Pandas
-* Sklearn
-* Matplotlib
-* Seaborn.
-
-
-<br/><br/>
 
 ### RECOMMENDER SYSTEMS
 
@@ -144,20 +141,17 @@ However, the matrix had a very low sparsity, making it unreliable for prediction
 As a result we obtained a sparsity of 0,5% that allowed us to proceed with the creation of our function 'find_similar_articles' that takes as input the id of the article of interest, X2 which is the new user-item utility matrix that we have built, k as the number of similar articles to recommend and metric as the metric to be used to calculate the distance for kNN calculations.
 
 ### Neural Network-based
-The **neural network-based** content filtering system uses product information from the Articles datasets to make recommendations. It uses a deep neural network to learn the customer and product features and then uses these features to make recommendations.
+The **Neural Network-based** content filtering system uses product information from the Articles datasets to make recommendations. It uses a deep neural network to learn the customer and product features and then uses these features to make recommendations.
 
 <br/><br/>
 
 ## Experiment design 
 
 ### Content-Based 
-The Content-Based Filtering Recommender system semms to be very accurate, it is based on four important features of articles and resepect to the Collaborative Filtering Recommender system is composed by more articles and results are very precise, similar articles tend to belong either to the same perceived colour or to the same garment group or product group or sometimes to all of them. We would totally recommend articles using this system rather than using the Collaborative one.   
+The Content-Based Filtering Recommender system seems to be very accurate, it is based on four important features of articles and resepect to the Collaborative Filtering Recommender system is composed by more articles and results are more precise, similar articles tend to belong either to the same perceived colour or to the same garment group or product group or sometimes to all of them. We would totally recommend articles using this system rather than using the Collaborative one.   
 
-### Collaborative filtering [ANDREA SCRIVI QUA]
-* The main purpose: 1-2 sentence high-level explanation
-* Baseline(s): describe the method(s) that you used to compare your work to
-* Evaluation Metrics(s): which ones did you use and why?
-
+### Collaborative Filtering
+The Collaborative Filtering Recommender system instead is not really reliable for our purpose. Our aim is to recommend articles to customers in order to increase revenues and to do that we need our model to be very accurate, it has to be able to recommend customers the right articles. Unfortunately to build this system some articles and customers were deleted from data, in this way the matrix sparsity increased arriving to 0,5% and was able to generate decent results. Despite this we lost some information deleting rows, even if we didn't proceed deleting random rows but only where the number of transactions per customer were less than 24. As the system is customer-based, past transactions of customers are really important to predict future purchases, from this we concluded that customers with a low number of transactions in the past are not so used to buy new articles, while customers that tend to buy more would rely their choices on the recommender system, in this way being more useful for the model. The problem here is that the percentage of customers with more than 24 transactions over the dataset is 2% which is absolutely insufficient to represent data.
 
 ### Neural Network Based: Two-tower retreival model
 The features we decided to exploit were:
