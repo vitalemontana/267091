@@ -12,7 +12,7 @@ The platform already has a recommender system. Our job is to make it better.
 We will test different models and select the most suitable one.
 
 ## 2) Methods
-Our dataset was composed by 3 files:
+Our dataset is composed by 3 files:
 
 * **Customers**, contaning details about customers. With columns:
   + customer_id
