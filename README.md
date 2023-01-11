@@ -155,7 +155,7 @@ However, the matrix had a very low sparsity, making it unreliable for prediction
 
 As a result we obtained a sparsity of 0,5% that allowed us to proceed with the creation of our function 'find_similar_articles' that takes as input the id of the article of interest, X2 which is the new user-item utility matrix that we have built, k as the number of similar articles to recommend and metric as the metric to be used to calculate the distance for kNN calculations.
 
-<img width="750" alt="Collaborative" src="[https://user-images.githubusercontent.com/117635995](https://user-images.githubusercontent.com/117635995/211693985-c27f54d7-3f39-4685-b8bd-7888896d079e.png)">
+<img width="750" alt="Collaborative" src="https://user-images.githubusercontent.com/117635995/211693985-c27f54d7-3f39-4685-b8bd-7888896d079e.png)">
 
 ### Neural Network-based
 The **Neural Network-based** content filtering system uses product information from the Articles datasets to make recommendations. It uses a deep neural network to learn the customer and product features and then uses these features to make recommendations.
