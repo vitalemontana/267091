@@ -58,12 +58,12 @@ The pyhton libraries we used in order to analyze data were:
 * Matplotlib
 * Seaborn.
 
-We began to analyse the dataset about articles since it has a complex structure and has a lot of columns, altough most attributes have 'code' and 'name' descriptions so we didn't need all of them. We looked for NaN values and luckily we didn't find them, despite this through a deeper analysis on all the attributes we discovered that some columns had values like '-1', 'Unknown' and 'undefined'. After having calculated the percentage of elements with these values we decided to delete these articles from the dataset as they could'nt helps us in building an accurate model.
+We began to analyse the dataset about articles since it has a complex structure and has a lot of columns, altough most attributes have 'code' and 'name' descriptions so we didn't need all of them. We looked for NaN values and luckily we didn't find them, despite this through a deeper analysis on all the attributes we discovered that some columns had values like '-1', 'Unknown' and 'undefined'. After having calculated the percentage of elements with these values we decided to delete these articles from the dataset as they couldn't help us in building an accurate model.
 
 Talking about the data collection and preparation of 'Customers' dataset we found out that column 'age' was composed by 133 NaN values.
 Now, we couldn't remove rows where NaN appeared, since we would have lost some customer ids. Therefore, we chose to:
 * First, segment customers based on their subscriptions to the additional services (Fashion newsletter, Club).
-* And then, compute the mode, i.e. the value that appears most often in a set of data values, for each segment and substitute it to the Nulls.
+* And then, compute the mode, i.e. the value that appears most often in a set of data values, for each segment and substitute it to the NaN.
 We chose the mode over the mean because the mean is more sensitive to outliers and skewed data, and, as we can see below, 75% of customers' age is under 46, while the maximum age is 91. Then we noticed that column 'age' was represented as float and we decided to change it as an integer to have a better visualization.
 
 Finally with the 'Transactions' dataset we noticed that it was connected to the other 2 datasets through 'article_id' and 'customer_id' so we needed to change it deleting the transactions made on articles that presented 'Unknown' features, in order to be coherent with the work done before.
@@ -95,7 +95,7 @@ Customers: we first took in consideration the column 'age' and plot how the diff
 
 <img width="750" alt="Screenshot 2023-01-09 alle 23 00 56" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
 
-Something that we thought could be useful was to assign to each of them an age group under which he/she falls. This would make our data more interpretable and less caothic and would totally helps us building the user-based recommender system. We proceeded in this way creating age ranges of more or less 10 years until we reach 65 (since there are few customers we simply assigned the group '65+'). Afterwards we add the new column age_group to the dataset. After we counted how many customers of that specified age group were present in the datase  and plotted our results, noticing that the groups with the highest number of customers are '15-24' and '25-34', this meant lots of young customers respect to old ones.
+Something that we thought could be useful was to assign to each of them an age group under which he/she falls. This would make our data more interpretable and less caothic and would totally helps us building the user-based recommender system. We proceeded in this way creating age ranges of more or less 10 years until we reach 65 (since there are few customers we simply assigned the group '65+'). Afterwards we add the new column age_group to the dataset. After we counted how many customers of that specified age group were present in the datase and plotted our results, noticing that the groups with the highest number of customers are '15-24' and '25-34', this meant lots of young customers respect to old ones.
 
 <img width="750" alt="age_group.png" src="https://user-images.githubusercontent.com/117635995/211693689-5f107556-dfdd-46d3-baf1-7b1e998d17d4.png">
 
@@ -112,11 +112,11 @@ Transactions: some analysis has been made over the column 'date' where we found 
 
 These instead were some statistics from our dataset:
 
-Number of transactions: 357535
-Number of unique articles: 6328
-Number of unique customers: 41238
-Average number of transactions per customer: 8.67
-Average number of transactions per article: 56.5
++ Number of transactions: 357535
++ Number of unique articles: 6328
++ Number of unique customers: 41238
++ Average number of transactions per customer: 8.67
++ Average number of transactions per article: 56.5
 
 We created different dataframes useful for our model, like 'customer_transactions', 'customer' which stated the number of transactions made by each customer or also 'articles' that stated the number of transactions for each article. Concluding our EDA we plotted our results respect to the dataset 'new' to understand between age groups how transaction groups are spread.
 
@@ -134,13 +134,13 @@ In order to build a recommender system, three different recommendation systems w
 
 ### Content-Based
 The **Content-Based** recommender system uses the product information from the Articles dataset to make recommendations. 
-We had to perform only EDA on the dataset of articles to built this model because we only needed to decide the features to take in consideration for our system. Finally we chose 'product_type_name', 'product_group_name', 'perceived_colour_master_name' and 'garment_group_name'. In order to build it we had to set up our dataset so that rows represent articles and columns represent the features we're interested in. To do that we had to manipulate these columns so that each of them was represented as a binary feature, so we create a one hot encoding for them. We obtained 4 tables were ID of articles represented rows while features represented columns, '1' means that article falls under that feature, '0' doesn't. After that we have merges all these features in a unique dataframe 'article_features'.
+We had to perform only EDA on the dataset of articles to built this model because we only needed to decide the features to take in consideration for our system. Finally we chose 'product_type_name', 'product_group_name', 'perceived_colour_master_name' and 'garment_group_name'. In order to build it we had to set up our dataset so that rows represent articles and columns represent the features we're interested in. To do that we had to manipulate these columns so that each of them was represented as a binary feature, so we create a one hot encoding for them. We obtained 4 tables were ID of articles represented rows while features represented columns, '1' means that article falls under that feature, '0' doesn't. After that we have merged all these features in a unique dataframe 'article_features'.
 
 We used a similarity metric called cosine similarity to build our recommender system. Cosine similarity looks at the cosine angle between two vectors, the smaller the cosine angle, the higher the degree of similarity. The cosine similarity matrix has shape n_articles x n_articles (so in this case 6328 x 6328). With this cosine similarity matrix, we'll be able to extract articles that are most similar to the article of interest.
 
 We used dictionaries to make our system complete, in this way was able to give information on articles that were recommended.
 
-Then we have created a function that takes as input the article id and the number of similar items we desire to recommend.We take the row of the similarity matrix associated to our article and we sort the elements in decreasing order. Finally we can just take the items we are interested to by selecting n how we prefer.
+Then we have created a function that takes as input the article id and the number of similar items we desire to recommend. We take the row of the similarity matrix associated to our article and we sort the elements in decreasing order. Finally we can just take the items we are interested to by selecting n how we prefer.
 
 <img width="750" alt="Content-based" src="https://user-images.githubusercontent.com/117635995/211694050-cf945cdd-4fba-40fe-b616-94fa10036ee6.png">
 
@@ -179,7 +179,6 @@ The features we decided to exploit were:
 
 We chose these features for this specific model because these, in our opinion, were the features that would have made the model learn enough about customers tastes and similarities, but without getting too specific and, therefore, avoiding over-fitting or recommendations too similar to previous purchases.
 
-
 The idea for the model is to construct a retrieval model composed by two components:
 
 1. A query model which produces the query representation (commonly a fixed-dimensionality embedding vector) by means of query features.
@@ -190,10 +189,8 @@ The outputs from the two models are then multiplied to compute a query-candidate
 
 To build and train this two-tower system, we will predict a collection of items from the list of articles that the customer has purchased previously. This implies that each product a user buys is a positive example, and each item they have not bought is an implicit negative example.
 
-
 To fit and evaluate the model, we need to split it into a training and evaluation set. We decided to split the data in chronological order, using older transactions to predict new ones.
 
-<br/>
 
 #### Evaluation metric: factorized_top_k
 Factorized_top_k is a metric used to measure the performance of a retrieval system. It is based on the idea of factorizing the user-item matrix into two matrices, one representing the user features and the other representing the item features. The metric then calculates the top k items for each user based on the dot product of the user and item feature matrices. 
@@ -203,7 +200,6 @@ This metric is useful for measuring the performance of a retrieval system becaus
 
 We can see that the model performed very well on the test set. In fact, it has factorized top 100 categorical accuracy of over 96%, and of 93% for top 50. That's even higher than the performances of the training. This is probabably due to the fact that we reduced the articles features to avoid overfitting and to have a more generalized model. 
 
-<br/>
 
 #### Results
 After having constructed, trained and evaluated the model, we built the 'recSys()' function, that takes as input the id of a customer and prints 5 recommended articles, in a completely readable format. The function has a constraint to avoid any possibility of recommending already bought articles.
@@ -214,10 +210,12 @@ Here we can see its output for customer 9505:
 
 
 
-<br/><br/>
+## Conclusions 
 
-## Conclusions [ANDREA SCRIVI QUA]
+Our job was to built an appropriate system that can predict customer preferences and recommend the right products to each customer. 
+The results of our project have shown that the neural network based content filtering system has the highest potential for improving the recommender system. This system was able to make more accurate recommendations than the other two systems, and it could be further improved by exploiting customer data to increase accuracy. 
+We have also seen that the collaborative filtering system and the content-based system have their own advantages and disadvantages, and they can be used in combination to create a more effective recommender system. 
+All our systems provide good recommendations, although we think that if we had more information on customers' preferences and on their tastes we could expect even better results. However, in particular with the dataset related to articles, we were provided with sufficient data to develop and improve the recommender system.
+In conclusion we hope we've helped our firm increasing revenues, but most important we hope they will thank us by increasing our salaries now.
 
-Our recommender engine has been implemented to boost the revenues of our company by predicting user preferences and recommending the right products to each user. The results of our project have shown that the neural network based content filtering system has the highest potential for improving the recommender system. This system was able to make more accurate recommendations than the other two systems, and it could be further improved by exploiting customer data to increase accuracy. 
-We have also seen that the collaborative filtering system and the content-based system have their own advantages and disadvantages, and they can be used in combination to create a more effective recommender system. In conclusion, our project has demonstrated the potential of using neural networks for content filtering and the importance of combining different recommendation systems to create an effective recommender system.
 
