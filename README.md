@@ -74,7 +74,7 @@ Finally with the 'Transactions' dataset we noticed that it was connected to the 
 We then performed an EDA on the 3 datasets to understand the company data, to see undergoing trends and to get useful insight.
 
 Articles: we grouped articles according to their features starting from the division in types. Plotting the results we saw that they were divided in 80 types and the type with more articles in the dataset was 'Trousers'. 
-<img width="1107" alt="product_type_name.png" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
+<img width="750" alt="product_type_name.png" src="https://user-images.githubusercontent.com/117635995/211692818-c3f5c04f-37a4-49a4-bb3e-572f8e5b357e.png">
 Afterwards we did the same for 'product_group_name' noticing that the plot was less caothic and articles were divided in 11 groups where the group with most articles was 'Garment Upper Body'. 
 <img width="1107" alt="product_group_name.png" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
 Then we looked at the different attributes regarding colours, where Black seems to dominate, and we have chosen 'perceived_colour_master_name' as the feature to include in our first recommender system as it was able to represent data better than 'colour_group_name' and 'perceived_colour_value_name'.
