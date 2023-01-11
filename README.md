@@ -74,13 +74,21 @@ Finally with the 'Transactions' dataset we noticed that it was connected to the 
 We then performed an EDA on the 3 datasets to understand the company data, to see undergoing trends and to get useful insight.
 
 Articles: we grouped articles according to their features starting from the division in types. Plotting the results we saw that they were divided in 80 types and the type with more articles in the dataset was 'Trousers'. 
+
 <img width="750" alt="product_type_name.png" src="https://user-images.githubusercontent.com/117635995/211692818-c3f5c04f-37a4-49a4-bb3e-572f8e5b357e.png">
+
 Afterwards we did the same for 'product_group_name' noticing that the plot was less caothic and articles were divided in 11 groups where the group with most articles was 'Garment Upper Body'. 
+
 <img width="750" alt="product_group_name.png" src="https://user-images.githubusercontent.com/117635995/211693334-a22196b2-e508-418f-8025-10ca0e2c17a8.png">
+
 Then we looked at the different attributes regarding colours, where Black seems to dominate, and we have chosen 'perceived_colour_master_name' as the feature to include in our first recommender system as it was able to represent data better than 'colour_group_name' and 'perceived_colour_value_name'.
+
 <img width="750" alt="perceived_colour_master_name.png" src="https://user-images.githubusercontent.com/117635995/211693560-85231bbc-0061-4104-a23a-8bd4a00084f4.png">
+
 We simply followed the same process for each feature of the dataset till garment_group_name.
+
 <img width="750" alt="garment.png" src="https://user-images.githubusercontent.com/117635995/211693854-1845561f-9806-4e25-b794-7de400a600f6.png">
+
 Finally we chose the columns to take in consideration to build our Content-Based Filtering Recommender System.
 
 Customers: we first took in consideration the column 'age' and plot how the different ages was spread over customers. To get an hint about the demography of the customer base we plotted the distribution of our customers' age:
@@ -88,14 +96,20 @@ Customers: we first took in consideration the column 'age' and plot how the diff
 <img width="750" alt="Screenshot 2023-01-09 alle 23 00 56" src="https://user-images.githubusercontent.com/96107340/211417060-44dc1754-861c-40e3-b1a1-5be656d2929f.png">
 
 Something that we thought could be useful was to assign to each of them an age group under which he/she falls. This would make our data more interpretable and less caothic and would totally helps us building the user-based recommender system. We proceeded in this way creating age ranges of more or less 10 years until we reach 65 (since there are few customers we simply assigned the group '65+'). Afterwards we add the new column age_group to the dataset. After we counted how many customers of that specified age group were present in the datase  and plotted our results, noticing that the groups with the highest number of customers are '15-24' and '25-34', this meant lots of young customers respect to old ones.
+
 <img width="750" alt="age_group.png" src="https://user-images.githubusercontent.com/117635995/211693689-5f107556-dfdd-46d3-baf1-7b1e998d17d4.png">
+
 We then worked with 'fashion news' and 'club member' columns creating different dataframes to see the choices of customer acoording to their age group and discovered that in general the majority of customers tend to be not subscribed to fashion news and tend not to be part of special clubs. Also here we plotted the results.
+
 <img width="750" alt="fashion news.png" src="https://user-images.githubusercontent.com/117635995/211693802-08a862cf-fd9f-4123-80fe-d302b8312cb5.png">
+
 <img width="750" alt="club members.png" src="https://user-images.githubusercontent.com/117635995/211693759-354bf37d-13cd-48bd-94f6-f677e220231e.png">
 
 
 Transactions: some analysis has been made over the column 'date' where we found out that 2020-09-09 was the day with more transactions, although this was just for curiosity. 
+
 <img width="750" alt="date.png" src="https://user-images.githubusercontent.com/117635995/211693921-f310b994-3eb9-446e-853f-08fe7a0bad8c.png">
+
 These instead were some statistics from our dataset:
 
 Number of transactions: 357535
@@ -105,6 +119,7 @@ Average number of transactions per customer: 8.67
 Average number of transactions per article: 56.5
 
 We created different dataframes useful for our model, like 'customer_transactions', 'customer' which stated the number of transactions made by each customer or also 'articles' that stated the number of transactions for each article. Concluding our EDA we plotted our results respect to the dataset 'new' to understand between age groups how transaction groups are spread.
+
 <img width="750" alt="transactions per age_group.png" src="https://user-images.githubusercontent.com/117635995/211694126-40b5308e-d148-4361-a2d2-6f131383fc9b.png">
 
 
@@ -140,8 +155,7 @@ However, the matrix had a very low sparsity, making it unreliable for prediction
 
 As a result we obtained a sparsity of 0,5% that allowed us to proceed with the creation of our function 'find_similar_articles' that takes as input the id of the article of interest, X2 which is the new user-item utility matrix that we have built, k as the number of similar articles to recommend and metric as the metric to be used to calculate the distance for kNN calculations.
 
-<img width="750" alt="Collaborative" src="https://user-images.githubusercontent.com/117635995/211693985-c27f54d7-3f39-4685-b8bd-7888896d079e.png
-">
+<img width="750" alt="Collaborative" src="[https://user-images.githubusercontent.com/117635995](https://user-images.githubusercontent.com/117635995/211693985-c27f54d7-3f39-4685-b8bd-7888896d079e.png)">
 
 ### Neural Network-based
 The **Neural Network-based** content filtering system uses product information from the Articles datasets to make recommendations. It uses a deep neural network to learn the customer and product features and then uses these features to make recommendations.
